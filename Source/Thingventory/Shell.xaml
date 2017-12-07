@@ -1,0 +1,18 @@
+﻿<UserControl
+  x:Class="Thingventory.Shell"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:nv="using:NavViewEx"
+  xmlns:views="using:Thingventory.Views"
+  mc:Ignorable="d"
+  d:DesignHeight="300" d:DesignWidth="400">
+
+  <nv:NavigationViewEx x:Name="NavView"
+                       Header="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem.Content}">
+    <nv:NavigationViewEx.MenuItems>
+      <NavigationViewItem Icon="Home" Content="Home" nv:NavigationViewEx.PageType="views:HomePage" />
+    </nv:NavigationViewEx.MenuItems>
+  </nv:NavigationViewEx>
+</UserControl>

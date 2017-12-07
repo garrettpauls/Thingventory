@@ -1,0 +1,3 @@
+[submodule "Dependencies/NavViewEx"]
+	path = Dependencies/NavViewEx
+	url = https://github.com/garrettpauls/NavigationViewEx.git
