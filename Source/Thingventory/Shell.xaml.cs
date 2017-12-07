@@ -10,5 +10,7 @@ namespace Thingventory
         }
 
         public Frame NavigationFrame => NavView.NavigationFrame;
+
+        public ShellViewModel ViewModel => DataContext as ShellViewModel;
     }
 }

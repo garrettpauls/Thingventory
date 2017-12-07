@@ -12,7 +12,11 @@
   <nv:NavigationViewEx x:Name="NavView"
                        Header="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem.Content}">
     <nv:NavigationViewEx.MenuItems>
-      <NavigationViewItem Icon="Home" Content="Home" nv:NavigationViewEx.PageType="views:HomePage" />
+      <NavigationViewItem Content="Home" Icon="Home" nv:NavigationViewEx.PageType="views:HomePage" />
     </nv:NavigationViewEx.MenuItems>
+    <nv:NavigationViewEx.PaneFooter>
+      <NavigationViewItem Content="Feedback" Tapped="{x:Bind ViewModel.ShowFeedbackAsync}"
+                          Icon="{Binding Source={StaticResource FeedbackGlyph}, Converter={StaticResource FontIconFactory}}" />
+    </nv:NavigationViewEx.PaneFooter>
   </nv:NavigationViewEx>
 </UserControl>
