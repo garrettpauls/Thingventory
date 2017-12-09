@@ -1,28 +1,40 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Autofac;
+using Common.Logging;
+using Common.Logging.Simple;
 using Template10.Common;
 using Template10.Controls;
 using Template10.Services.NavigationService;
+using Thingventory.Core;
 using Thingventory.Services;
 using Thingventory.ViewModels;
 using Thingventory.Views;
+using UnhandledExceptionEventArgs = Windows.UI.Xaml.UnhandledExceptionEventArgs;
 
 namespace Thingventory
 {
     public sealed partial class App : BootStrapper
     {
         private IContainer mContainer;
+        private ILog mLog;
+
+        public App()
+        {
+            mLog = LoggingModule.GetLog<App>();
+
+            UnhandledException += _HandleUnhandledException;
+        }
 
         private IContainer _BuildContainer()
         {
             var builder = new ContainerBuilder();
 
+            builder.RegisterModule<LoggingModule>();
             builder.RegisterModule<ServicesModule>();
             builder.RegisterModule<ViewModelsModule>();
             builder.Register(_GetNavigationService).As<INavigationService>().InstancePerDependency();
@@ -33,6 +45,22 @@ namespace Thingventory
             {
                 return WindowWrapper.Current().NavigationServices.FirstOrDefault();
             }
+        }
+
+        private void _HandleUnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            mLog.Error($"Unhandled exception: {e.Message}", e.Exception);
+        }
+
+        private void _InitializeLogging()
+        {
+#if DEBUG
+            LogManager.Adapter = new DebugLoggerFactoryAdapter(LogLevel.All, false, true, true, "s");
+#else
+            LogManager.Adapter = new NoOpLoggerFactoryAdapter();
+#endif
+
+            mLog = LoggingModule.GetLog<App>();
         }
 
         public override UIElement CreateRootElement(IActivatedEventArgs e)
@@ -49,6 +77,7 @@ namespace Thingventory
 
         public override async Task OnInitializeAsync(IActivatedEventArgs args)
         {
+            _InitializeLogging();
             mContainer = _BuildContainer();
 
             try
@@ -59,7 +88,7 @@ namespace Thingventory
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
+                mLog.Error("Initialization failed", ex);
                 throw;
             }
         }

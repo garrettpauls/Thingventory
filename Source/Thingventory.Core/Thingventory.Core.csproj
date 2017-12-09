@@ -108,6 +108,7 @@
   <ItemGroup>
     <Compile Include="Data\LocationEntity.cs" />
     <Compile Include="Data\ThingDataContext.cs" />
+    <Compile Include="LoggingModule.cs" />
     <Compile Include="Migrations\20171208173620_CreateLocationTable.cs" />
     <Compile Include="Migrations\20171208173620_CreateLocationTable.designer.cs">
       <DependentUpon>20171208173620_CreateLocationTable.cs</DependentUpon>
@@ -120,6 +121,12 @@
     <EmbeddedResource Include="Properties\Thingventory.Core.rd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Autofac">
+      <Version>4.6.2</Version>
+    </PackageReference>
+    <PackageReference Include="Common.Logging">
+      <Version>3.4.1</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite">
       <Version>1.1.4</Version>
     </PackageReference>
