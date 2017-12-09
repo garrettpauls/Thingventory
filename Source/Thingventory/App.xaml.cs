@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
@@ -45,10 +47,21 @@ namespace Thingventory
             };
         }
 
-        public override Task OnInitializeAsync(IActivatedEventArgs args)
+        public override async Task OnInitializeAsync(IActivatedEventArgs args)
         {
             mContainer = _BuildContainer();
-            return base.OnInitializeAsync(args);
+
+            try
+            {
+                var invService = mContainer.Resolve<IInventoryService>();
+                var inv = await invService.GetCurrentInventoryAsync();
+                await invService.MigrateInventoryAsync(inv);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                throw;
+            }
         }
 
         public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)

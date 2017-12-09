@@ -1,4 +1,4 @@
-﻿namespace Thingventory.Models
+﻿namespace Thingventory.Core.Models
 {
     public sealed class Location : ChangeTrackingModel
     {

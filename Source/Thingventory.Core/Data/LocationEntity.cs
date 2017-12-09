@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Thingventory.Services.Data
+namespace Thingventory.Core.Data
 {
     [Table("Location")]
     public sealed class LocationEntity

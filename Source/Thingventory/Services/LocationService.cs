@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using Thingventory.Models;
-using Thingventory.Services.Data;
+using Thingventory.Core.Data;
+using Thingventory.Core.Models;
 
 namespace Thingventory.Services
 {

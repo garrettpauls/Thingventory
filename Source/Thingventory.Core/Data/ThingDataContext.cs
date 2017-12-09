@@ -2,21 +2,21 @@
 using Windows.Storage;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using Thingventory.Models;
+using Thingventory.Core.Models;
 
-namespace Thingventory.Services.Data
+namespace Thingventory.Core.Data
 {
     public sealed class ThingDataContext : DbContext
     {
         private readonly string mFile;
 
-        public ThingDataContext() : this("")
+        public ThingDataContext() : this("data.sqlite")
         {
         }
 
-        public ThingDataContext(string rootPath)
+        public ThingDataContext(string file)
         {
-            mFile = Path.Combine(rootPath, "data.sqlite");
+            mFile = file;
         }
 
         public DbSet<LocationEntity> Locations { get; set; }
@@ -26,7 +26,8 @@ namespace Thingventory.Services.Data
             var rootPath = Path.Combine(
                 ApplicationData.Current.LocalFolder.Path,
                 "Inventories",
-                inventory.Id.ToString("N"));
+                inventory.Id.ToString("N"),
+                "data.sqlite");
             return new ThingDataContext(rootPath);
         }
 

@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Storage;
 using Microsoft.EntityFrameworkCore;
-using Thingventory.Models;
-using Thingventory.Services.Data;
+using Thingventory.Core.Data;
+using Thingventory.Core.Models;
 
 namespace Thingventory.Services
 {
@@ -41,6 +41,7 @@ namespace Thingventory.Services
             };
 
             await SaveInventoryAsync(inventory);
+            await MigrateInventoryAsync(inventory);
 
             var loc = mLocationServiceFactory(inventory);
 

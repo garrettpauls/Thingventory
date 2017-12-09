@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Thingventory.Models
+namespace Thingventory.Core.Models
 {
     [DataContract(Name = "Inventory", Namespace = "Thingventory")]
     public sealed class Inventory : ChangeTrackingModel
@@ -14,7 +14,7 @@ namespace Thingventory.Models
         }
 
         [DataMember(Name = "Id")]
-        public Guid Id { get; }
+        public Guid Id { get; private set; }
 
         [DataMember(Name = "Name")]
         public string Name
