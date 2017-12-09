@@ -5,6 +5,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Autofac;
+using Autofac.Core;
 using Common.Logging;
 using Common.Logging.Simple;
 using Template10.Common;
@@ -109,7 +110,11 @@ namespace Thingventory
 
             if (vmType != null)
             {
-                return (INavigable) mLifetime.Resolve(vmType);
+                var parameters = navigationService.CurrentPageParam == null
+                    ? new Parameter[0]
+                    : new Parameter[] {new TypedParameter(navigationService.CurrentPageParam.GetType(), navigationService.CurrentPageParam)};
+
+                return (INavigable) mLifetime.Resolve(vmType, parameters);
             }
 
             return base.ResolveForPage(page, navigationService);

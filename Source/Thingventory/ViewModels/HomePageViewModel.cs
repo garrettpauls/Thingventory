@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Navigation;
 using Template10.Mvvm;
+using Template10.Services.NavigationService;
 using Template10.Utils;
 using Thingventory.Core.Models;
 using Thingventory.Core.Services;
+using Thingventory.Views;
 
 namespace Thingventory.ViewModels
 {
@@ -28,7 +30,7 @@ namespace Thingventory.ViewModels
             var locations = await mLocationService.GetLocationsAsync();
             foreach (var location in locations.OrderBy(item => item.Name))
             {
-                var vm = new HomePageLocationViewModel(location, mItemService);
+                var vm = new HomePageLocationViewModel(location, mItemService, NavigationService);
                 await vm.InitializeAsync();
                 Locations.Add(vm);
             }
@@ -38,15 +40,22 @@ namespace Thingventory.ViewModels
     public sealed class HomePageLocationViewModel : BindableBase
     {
         private readonly IItemService mItemService;
+        private readonly INavigationService mNavService;
 
-        public HomePageLocationViewModel(Location location, IItemService itemService)
+        public HomePageLocationViewModel(Location location, IItemService itemService, INavigationService navService)
         {
             Location = location;
             mItemService = itemService;
+            mNavService = navService;
         }
-        
+
         public ObservableCollection<ItemSummary> Items { get; } = new ObservableCollection<ItemSummary>();
         public Location Location { get; }
+
+        public Task AddItemAsync()
+        {
+            return mNavService.NavigateAsync(typeof(EditItemPage), new EditItemPagePayload(Location.Id, null));
+        }
 
         public async Task InitializeAsync()
         {

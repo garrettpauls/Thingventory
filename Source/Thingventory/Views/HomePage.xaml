@@ -7,19 +7,37 @@
   xmlns:viewModels="using:Thingventory.ViewModels"
   xmlns:models="using:Thingventory.Core.Models"
   mc:Ignorable="d">
+  <Page.Resources>
+    <CollectionViewSource x:Name="GroupedItems" Source="{x:Bind ViewModel.Locations}"
+                          IsSourceGrouped="True" ItemsPath="Items" />
+
+    <DataTemplate x:Name="HeaderDataTemplate" x:DataType="viewModels:HomePageViewModel">
+      <CommandBar Content="Locations" Style="{StaticResource TextContentCommandBarStyle}">
+        <CommandBar.PrimaryCommands>
+          <AppBarButton Label="Add" Icon="Add" />
+        </CommandBar.PrimaryCommands>
+      </CommandBar>
+    </DataTemplate>
+  </Page.Resources>
   <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <SemanticZoom>
-      <SemanticZoom.Resources>
-        <CollectionViewSource x:Name="GroupedItems" Source="{x:Bind ViewModel.Locations}"
-                              IsSourceGrouped="True" ItemsPath="Items" />
-      </SemanticZoom.Resources>
       <SemanticZoom.ZoomedInView>
         <GridView ItemsSource="{Binding Source={StaticResource GroupedItems}}" DisplayMemberPath="Name">
           <GridView.GroupStyle>
             <GroupStyle HidesIfEmpty="False">
               <GroupStyle.HeaderTemplate>
                 <DataTemplate x:DataType="viewModels:HomePageLocationViewModel">
-                  <TextBlock Text="{x:Bind Location.Name}" Style="{ThemeResource TitleTextBlockStyle}" Margin="8 0" />
+                  <Grid>
+                    <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="*" />
+                      <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="{x:Bind Location.Name}"
+                               Style="{ThemeResource TitleTextBlockStyle}" Margin="8 0" />
+                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                      <FontIcon Glyph="{StaticResource AddToGlyph}" Tapped="_HandleCommandTapped" Tag="AddItem" />
+                    </StackPanel>
+                  </Grid>
                 </DataTemplate>
               </GroupStyle.HeaderTemplate>
               <GroupStyle.Panel>

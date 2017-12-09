@@ -4,4 +4,5 @@
   xmlns:converters="using:Thingventory.Xaml.Converters">
   <converters:FontIconFactory x:Key="FontIconFactory" />
   <x:String x:Key="FeedbackGlyph">&#xED15;</x:String>
+  <x:String x:Key="AddToGlyph">&#xECC8;</x:String>
 </ResourceDictionary>
