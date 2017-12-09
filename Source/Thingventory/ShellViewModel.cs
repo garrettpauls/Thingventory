@@ -8,7 +8,7 @@ using Thingventory.Core.Services;
 
 namespace Thingventory
 {
-    public sealed class ShellViewModel : ViewModelBase
+    public sealed class ShellViewModel : BindableBase
     {
         private readonly INavigationService mNavService;
 

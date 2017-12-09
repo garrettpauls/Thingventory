@@ -22,7 +22,6 @@ namespace Thingventory
     public sealed partial class App : BootStrapper
     {
         private IContainer mContainer;
-
         private ILifetimeScope mLifetime;
         private ILog mLog;
 
