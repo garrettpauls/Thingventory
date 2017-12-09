@@ -19,6 +19,7 @@ namespace Thingventory.Core.Data
             mFile = file;
         }
 
+        public DbSet<ItemEntity> Items { get; set; }
         public DbSet<LocationEntity> Locations { get; set; }
 
         public static ThingDataContext Create(Inventory inventory)

@@ -17,7 +17,7 @@ namespace Thingventory.Core.Services
                 .InNamespaceOf<ServicesModule>()
                 .AssignableTo<IService>()
                 .AsImplementedInterfaces()
-                .SingleInstance();
+                .InstancePerLifetimeScope();
         }
     }
 }

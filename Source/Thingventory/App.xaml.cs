@@ -11,6 +11,7 @@ using Template10.Common;
 using Template10.Controls;
 using Template10.Services.NavigationService;
 using Thingventory.Core;
+using Thingventory.Core.Models;
 using Thingventory.Core.Services;
 using Thingventory.ViewModels;
 using Thingventory.Views;
@@ -21,6 +22,8 @@ namespace Thingventory
     public sealed partial class App : BootStrapper
     {
         private IContainer mContainer;
+
+        private ILifetimeScope mLifetime;
         private ILog mLog;
 
         public App()
@@ -85,6 +88,8 @@ namespace Thingventory
                 var invService = mContainer.Resolve<IInventoryService>();
                 var inv = await invService.GetCurrentInventoryAsync();
                 await invService.MigrateInventoryAsync(inv);
+
+                mLifetime = mContainer.BeginLifetimeScope(builder => { builder.RegisterInstance(inv).As<Inventory>().SingleInstance(); });
             }
             catch (Exception ex)
             {
@@ -93,9 +98,9 @@ namespace Thingventory
             }
         }
 
-        public override Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
+        public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args)
         {
-            return NavigationService.NavigateAsync(typeof(HomePage));
+            await NavigationService.NavigateAsync(typeof(HomePage));
         }
 
         public override INavigable ResolveForPage(Page page, NavigationService navigationService)
@@ -105,7 +110,7 @@ namespace Thingventory
 
             if (vmType != null)
             {
-                return (INavigable) mContainer.Resolve(vmType);
+                return (INavigable) mLifetime.Resolve(vmType);
             }
 
             return base.ResolveForPage(page, navigationService);

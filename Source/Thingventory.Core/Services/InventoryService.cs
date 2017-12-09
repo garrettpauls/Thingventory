@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Storage;
+using Common.Logging;
 using Microsoft.EntityFrameworkCore;
 using Thingventory.Core.Data;
 using Thingventory.Core.Models;
@@ -23,11 +23,13 @@ namespace Thingventory.Core.Services
     public sealed class InventoryService : IInventoryService, IService
     {
         private readonly Func<Inventory, ILocationService> mLocationServiceFactory;
+        private readonly ILog mLog;
         private readonly IAsyncOperation<StorageFolder> mRootFolder;
 
-        public InventoryService(Func<Inventory, ILocationService> locationServiceFactory)
+        public InventoryService(Func<Inventory, ILocationService> locationServiceFactory, ILog log)
         {
             mLocationServiceFactory = locationServiceFactory;
+            mLog = log;
             mRootFolder = ApplicationData.Current.LocalFolder.CreateFolderAsync("Inventories", CreationCollisionOption.OpenIfExists);
         }
 
@@ -105,7 +107,7 @@ namespace Thingventory.Core.Services
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
+                mLog.Warn($"Failed to load inventory from folder: {folder.Path}", ex);
                 return null;
             }
         }

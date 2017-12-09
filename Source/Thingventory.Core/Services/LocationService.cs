@@ -11,18 +11,15 @@ namespace Thingventory.Core.Services
         Task<Location[]> GetLocationsAsync();
     }
 
-    public sealed class LocationService : ILocationService, IService
+    public sealed class LocationService : InventoryDataAccessBase, ILocationService, IService
     {
-        private readonly Inventory mInventory;
-
-        public LocationService(Inventory inventory)
+        public LocationService(Inventory inventory) : base(inventory)
         {
-            mInventory = inventory;
         }
 
         public async Task<Location> CreateLocationAsync(string name)
         {
-            using (var context = _GetContextAsync())
+            using (var context = GetContext())
             {
                 var entity = new LocationEntity
                 {
@@ -38,7 +35,7 @@ namespace Thingventory.Core.Services
 
         public async Task<Location[]> GetLocationsAsync()
         {
-            using (var context = _GetContextAsync())
+            using (var context = GetContext())
             {
                 return await context
                     .Locations
@@ -46,11 +43,6 @@ namespace Thingventory.Core.Services
                     .Select(_Translate)
                     .ToArray();
             }
-        }
-
-        private ThingDataContext _GetContextAsync()
-        {
-            return ThingDataContext.Create(mInventory);
         }
 
         private Location _Translate(LocationEntity entity) => new Location(entity.Id) {Name = entity.Name};
