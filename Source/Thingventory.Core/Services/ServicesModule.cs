@@ -1,6 +1,8 @@
-﻿using Autofac;
+﻿using System.Reflection;
+using Autofac;
+using Module = Autofac.Module;
 
-namespace Thingventory.Services
+namespace Thingventory.Core.Services
 {
     public interface IService
     {
@@ -11,7 +13,7 @@ namespace Thingventory.Services
         protected override void Load(ContainerBuilder builder)
         {
             builder
-                .RegisterAssemblyTypes(typeof(ServicesModule).Assembly)
+                .RegisterAssemblyTypes(typeof(ServicesModule).GetTypeInfo().Assembly)
                 .InNamespaceOf<ServicesModule>()
                 .AssignableTo<IService>()
                 .AsImplementedInterfaces()

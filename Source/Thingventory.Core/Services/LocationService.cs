@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Thingventory.Core.Data;
 using Thingventory.Core.Models;
 
-namespace Thingventory.Services
+namespace Thingventory.Core.Services
 {
     public interface ILocationService
     {

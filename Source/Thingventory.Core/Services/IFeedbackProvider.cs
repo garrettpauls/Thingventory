@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Thingventory.Services
+namespace Thingventory.Core.Services
 {
     public interface IFeedbackProvider
     {

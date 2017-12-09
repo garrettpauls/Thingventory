@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Thingventory.Core.Data;
 using Thingventory.Core.Models;
 
-namespace Thingventory.Services
+namespace Thingventory.Core.Services
 {
     public interface IInventoryService
     {

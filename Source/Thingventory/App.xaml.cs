@@ -11,7 +11,7 @@ using Template10.Common;
 using Template10.Controls;
 using Template10.Services.NavigationService;
 using Thingventory.Core;
-using Thingventory.Services;
+using Thingventory.Core.Services;
 using Thingventory.ViewModels;
 using Thingventory.Views;
 using UnhandledExceptionEventArgs = Windows.UI.Xaml.UnhandledExceptionEventArgs;

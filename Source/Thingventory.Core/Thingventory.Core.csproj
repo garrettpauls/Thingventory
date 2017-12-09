@@ -118,6 +118,10 @@
     <Compile Include="Models\Inventory.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IFeedbackProvider.cs" />
+    <Compile Include="Services\InventoryService.cs" />
+    <Compile Include="Services\LocationService.cs" />
+    <Compile Include="Services\ServicesModule.cs" />
     <EmbeddedResource Include="Properties\Thingventory.Core.rd.xml" />
   </ItemGroup>
   <ItemGroup>

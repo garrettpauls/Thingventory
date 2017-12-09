@@ -4,7 +4,7 @@ using Windows.UI.Xaml;
 using Microsoft.Services.Store.Engagement;
 using Template10.Mvvm;
 using Template10.Services.NavigationService;
-using Thingventory.Services;
+using Thingventory.Core.Services;
 
 namespace Thingventory
 {
