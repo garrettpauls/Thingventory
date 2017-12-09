@@ -4,18 +4,36 @@
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:viewModels="using:Thingventory.ViewModels"
+  xmlns:models="using:Thingventory.Core.Models"
   mc:Ignorable="d">
   <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <SemanticZoom>
+      <SemanticZoom.Resources>
+        <CollectionViewSource x:Name="GroupedItems" Source="{x:Bind ViewModel.Locations}"
+                              IsSourceGrouped="True" ItemsPath="Items" />
+      </SemanticZoom.Resources>
       <SemanticZoom.ZoomedInView>
-        <GridView ItemsSource="{x:Bind ViewModel.Locations}" />
+        <GridView ItemsSource="{Binding Source={StaticResource GroupedItems}}" DisplayMemberPath="Name">
+          <GridView.GroupStyle>
+            <GroupStyle HidesIfEmpty="False">
+              <GroupStyle.HeaderTemplate>
+                <DataTemplate x:DataType="viewModels:HomePageLocationViewModel">
+                  <TextBlock Text="{x:Bind Location.Name}" Style="{ThemeResource TitleTextBlockStyle}" Margin="8 0" />
+                </DataTemplate>
+              </GroupStyle.HeaderTemplate>
+              <GroupStyle.Panel>
+                <ItemsPanelTemplate>
+                  <ItemsWrapGrid Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+              </GroupStyle.Panel>
+            </GroupStyle>
+          </GridView.GroupStyle>
+        </GridView>
       </SemanticZoom.ZoomedInView>
       <SemanticZoom.ZoomedOutView>
-        <ListView ItemsSource="{x:Bind ViewModel.Locations}" DisplayMemberPath="Name" />
+        <ListView ItemsSource="{x:Bind ViewModel.Locations}" DisplayMemberPath="Location.Name" />
       </SemanticZoom.ZoomedOutView>
     </SemanticZoom>
   </Grid>
 </Page>
-
-
-

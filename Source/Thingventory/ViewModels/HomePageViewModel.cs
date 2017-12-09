@@ -44,7 +44,7 @@ namespace Thingventory.ViewModels
             Location = location;
             mItemService = itemService;
         }
-
+        
         public ObservableCollection<ItemSummary> Items { get; } = new ObservableCollection<ItemSummary>();
         public Location Location { get; }
 
