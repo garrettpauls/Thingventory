@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
@@ -53,6 +54,13 @@ namespace Thingventory
         private void _HandleUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             mLog.Error($"Unhandled exception: {e.Message}", e.Exception);
+
+#if DEBUG
+            if (Debugger.IsAttached)
+            {
+                Debugger.Break();
+            }
+#endif
         }
 
         private void _InitializeLogging()

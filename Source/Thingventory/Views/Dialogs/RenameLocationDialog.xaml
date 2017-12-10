@@ -11,7 +11,15 @@
   SecondaryButtonText="Cancel">
 
   <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
-    <TextBox x:Name="NameBox" Header="Name" HorizontalAlignment="Stretch" />
+    <StackPanel Orientation="Horizontal">
+      <TextBlock Text="Name" />
+      <StackPanel Margin="12 0" Orientation="Horizontal" x:Name="NameIsEmptyWarning">
+        <FontIcon Glyph="{StaticResource WarningGlyph}" Foreground="Goldenrod" />
+        <TextBlock Text="Name cannot be empty." />
+      </StackPanel>
+    </StackPanel>
+    <TextBox x:Name="NameBox" HorizontalAlignment="Stretch" TextChanged="_HandleNameChanged" />
     <TextBox x:Name="NotesBox" Header="Notes" HorizontalAlignment="Stretch" />
   </StackPanel>
 </ContentDialog>
+

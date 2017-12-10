@@ -5,4 +5,5 @@
   <converters:FontIconFactory x:Key="FontIconFactory" />
   <x:String x:Key="FeedbackGlyph">&#xED15;</x:String>
   <x:String x:Key="AddToGlyph">&#xECC8;</x:String>
+  <x:String x:Key="WarningGlyph">&#xE7BA;</x:String>
 </ResourceDictionary>
