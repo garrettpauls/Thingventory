@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Thingventory.Core.Data;
 using Thingventory.Core.Models;
 
@@ -7,8 +8,9 @@ namespace Thingventory.Core.Services
 {
     public interface ILocationService
     {
-        Task<Location> CreateLocationAsync(string name);
+        Task<Location> CreateLocationAsync(string name, string notes = "");
         Task<Location[]> GetLocationsAsync();
+        Task SaveLocationAsync(Location location);
     }
 
     public sealed class LocationService : InventoryDataAccessBase, ILocationService, IService
@@ -17,13 +19,14 @@ namespace Thingventory.Core.Services
         {
         }
 
-        public async Task<Location> CreateLocationAsync(string name)
+        public async Task<Location> CreateLocationAsync(string name, string notes = "")
         {
             using (var context = GetContext())
             {
                 var entity = new LocationEntity
                 {
-                    Name = name
+                    Name = name,
+                    Notes = notes ?? ""
                 };
 
                 context.Locations.Add(entity);
@@ -45,6 +48,25 @@ namespace Thingventory.Core.Services
             }
         }
 
-        private Location _Translate(LocationEntity entity) => new Location(entity.Id) {Name = entity.Name};
+        public async Task SaveLocationAsync(Location location)
+        {
+            using (var context = GetContext())
+            {
+                var entity = await context.Locations.FirstOrDefaultAsync(loc => loc.Id == location.Id);
+                if (entity != null)
+                {
+                    entity.Name = location.Name;
+                    entity.Notes = location.Notes;
+
+                    await context.SaveChangesAsync();
+                }
+            }
+        }
+
+        private Location _Translate(LocationEntity entity) => new Location(entity.Id)
+        {
+            Name = entity.Name,
+            Notes = entity.Notes
+        };
     }
 }

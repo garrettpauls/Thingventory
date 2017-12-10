@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Template10.Mvvm;
 using Template10.Services.NavigationService;
@@ -9,6 +11,7 @@ using Template10.Utils;
 using Thingventory.Core.Models;
 using Thingventory.Core.Services;
 using Thingventory.Views;
+using Thingventory.Views.Dialogs;
 
 namespace Thingventory.ViewModels
 {
@@ -30,7 +33,7 @@ namespace Thingventory.ViewModels
             var locations = await mLocationService.GetLocationsAsync();
             foreach (var location in locations.OrderBy(item => item.Name))
             {
-                var vm = new HomePageLocationViewModel(location, mItemService, NavigationService);
+                var vm = new HomePageLocationViewModel(location, mLocationService, mItemService, NavigationService);
                 await vm.InitializeAsync();
                 Locations.Add(vm);
             }
@@ -40,11 +43,15 @@ namespace Thingventory.ViewModels
     public sealed class HomePageLocationViewModel : BindableBase
     {
         private readonly IItemService mItemService;
+        private readonly ILocationService mLocationService;
         private readonly INavigationService mNavService;
 
-        public HomePageLocationViewModel(Location location, IItemService itemService, INavigationService navService)
+        public HomePageLocationViewModel(
+            Location location, ILocationService locationService,
+            IItemService itemService, INavigationService navService)
         {
             Location = location;
+            mLocationService = locationService;
             mItemService = itemService;
             mNavService = navService;
         }
@@ -61,6 +68,31 @@ namespace Thingventory.ViewModels
         {
             var items = await mItemService.GetItemListForLocation(Location.Id);
             Items.AddRange(items.OrderBy(item => item.Name));
+        }
+
+        public async Task RenameAsync()
+        {
+            var dialog = new RenameLocationDialog
+            {
+                LocationName = Location.Name,
+                LocationNotes = Location.Notes
+            };
+
+            var result = await dialog.ShowAsync();
+            if (result == ContentDialogResult.Primary)
+            {
+                if (string.IsNullOrWhiteSpace(dialog.LocationName))
+                {
+                    // TODO: show validation error
+                }
+                else
+                {
+                    Location.Name = dialog.LocationName;
+                    Location.Notes = dialog.LocationNotes;
+
+                    await mLocationService.SaveLocationAsync(Location);
+                }
+            }
         }
     }
 }

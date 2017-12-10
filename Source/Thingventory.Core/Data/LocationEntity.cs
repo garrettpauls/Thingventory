@@ -10,6 +10,9 @@ namespace Thingventory.Core.Data
         public int Id { get; set; }
 
         [Column("Name"), Required]
-        public string Name { get; set; }
+        public string Name { get; set; } = "";
+
+        [Column("Notes"), Required]
+        public string Notes { get; set; } = "";
     }
 }

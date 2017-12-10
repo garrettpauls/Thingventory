@@ -6,6 +6,7 @@
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:viewModels="using:Thingventory.ViewModels"
   xmlns:models="using:Thingventory.Core.Models"
+  xmlns:xaml="using:Thingventory.Xaml"
   mc:Ignorable="d">
   <Page.Resources>
     <CollectionViewSource x:Name="GroupedItems" Source="{x:Bind ViewModel.Locations}"
@@ -23,19 +24,29 @@
     <SemanticZoom>
       <SemanticZoom.ZoomedInView>
         <GridView ItemsSource="{Binding Source={StaticResource GroupedItems}}" DisplayMemberPath="Name">
+          <GridView.Resources>
+            <Style TargetType="GridViewHeaderItem">
+              <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            </Style>
+          </GridView.Resources>
           <GridView.GroupStyle>
             <GroupStyle HidesIfEmpty="False">
               <GroupStyle.HeaderTemplate>
                 <DataTemplate x:DataType="viewModels:HomePageLocationViewModel">
                   <Grid>
                     <Grid.ColumnDefinitions>
+                      <ColumnDefinition Width="Auto" />
                       <ColumnDefinition Width="*" />
                       <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Column="0" Text="{x:Bind Location.Name}"
+                    <TextBlock Grid.Column="0" Text="{x:Bind Location.Name}" VerticalAlignment="Bottom"
                                Style="{ThemeResource TitleTextBlockStyle}" Margin="8 0" />
-                    <StackPanel Grid.Column="1" Orientation="Horizontal">
-                      <FontIcon Glyph="{StaticResource AddToGlyph}" Tapped="_HandleCommandTapped" Tag="AddItem" />
+                    <TextBlock Grid.Column="1" Margin="8 0" VerticalAlignment="Bottom" Opacity="0.6" FontSize="10"
+                               Text="{x:Bind Location.Notes, Mode=OneWay, Converter={StaticResource StringFormatConverter}, ConverterParameter='({0})'}"
+                               Visibility="{x:Bind Location.Notes, Mode=OneWay, Converter={StaticResource HideNullOrWhiteSpaceConverter}}" />
+                    <StackPanel Grid.Column="2" Orientation="Horizontal">
+                      <SymbolIcon Symbol="Rename" Tapped="_HandleCommandTapped" Tag="RenameLocation" Margin="8 0" />
+                      <FontIcon Glyph="{StaticResource AddToGlyph}" Tapped="_HandleCommandTapped" Tag="AddItem" Margin="8 0" />
                     </StackPanel>
                   </Grid>
                 </DataTemplate>

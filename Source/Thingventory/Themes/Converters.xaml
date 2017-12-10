@@ -1,0 +1,16 @@
+﻿<ResourceDictionary
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:c10="using:Template10.Converters"
+  xmlns:c="using:Thingventory.Xaml.Converters">
+  <c10:StringFormatConverter x:Name="StringFormatConverter" />
+  <c:NullOrWhiteSpaceConverter x:Name="HideNullOrWhiteSpaceConverter">
+    <c:NullOrWhiteSpaceConverter.IfNullOrEmpty>
+      <Visibility>Collapsed</Visibility>
+    </c:NullOrWhiteSpaceConverter.IfNullOrEmpty>
+    <c:NullOrWhiteSpaceConverter.Otherwise>
+      <Visibility>Visible</Visibility>
+    </c:NullOrWhiteSpaceConverter.Otherwise>
+  </c:NullOrWhiteSpaceConverter>
+</ResourceDictionary>
+

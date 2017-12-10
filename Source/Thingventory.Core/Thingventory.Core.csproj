@@ -118,6 +118,10 @@
     <Compile Include="Migrations\20171209021925_CreateItemTable.designer.cs">
       <DependentUpon>20171209021925_CreateItemTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20171210004214_AddNotesToLocation.cs" />
+    <Compile Include="Migrations\20171210004214_AddNotesToLocation.designer.cs">
+      <DependentUpon>20171210004214_AddNotesToLocation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\ThingDataContextModelSnapshot.cs" />
     <Compile Include="Models\ChangeTrackingModel.cs" />
     <Compile Include="Models\Inventory.cs" />

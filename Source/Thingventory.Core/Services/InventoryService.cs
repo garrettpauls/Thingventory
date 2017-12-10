@@ -75,7 +75,15 @@ namespace Thingventory.Core.Services
         {
             using (var context = ThingDataContext.Create(inventory))
             {
-                await context.Database.MigrateAsync();
+                try
+                {
+                    await context.Database.MigrateAsync();
+                }
+                catch (Exception ex)
+                {
+                    mLog.Error($"Failed to migrate inventory: {inventory.Id}", ex);
+                    throw;
+                }
             }
         }
 
