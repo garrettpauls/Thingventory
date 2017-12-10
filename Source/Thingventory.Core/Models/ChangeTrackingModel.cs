@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Runtime.Serialization;
 
 namespace Thingventory.Core.Models
 {
-    [DataContract]
     public abstract class ChangeTrackingModel : INotifyPropertyChanged
     {
         private readonly HashSet<string> mIgnoreChangedPropertyNames;
@@ -17,7 +15,6 @@ namespace Thingventory.Core.Models
             mIgnoreChangedPropertyNames.Add(nameof(HasChanges));
         }
 
-        [IgnoreDataMember]
         public bool HasChanges
         {
             get => mHasChanges;

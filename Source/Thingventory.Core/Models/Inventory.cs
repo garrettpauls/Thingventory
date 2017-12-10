@@ -4,10 +4,8 @@ using System.Runtime.Serialization;
 namespace Thingventory.Core.Models
 {
     [DataContract(Name = "Inventory", Namespace = "Thingventory")]
-    public sealed class Inventory : ChangeTrackingModel
+    public sealed class Inventory
     {
-        private string mName;
-
         public Inventory(Guid id)
         {
             Id = id;
@@ -17,10 +15,6 @@ namespace Thingventory.Core.Models
         public Guid Id { get; private set; }
 
         [DataMember(Name = "Name")]
-        public string Name
-        {
-            get => mName;
-            set => Set(ref mName, value);
-        }
+        public string Name { get; set; }
     }
 }
