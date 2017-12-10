@@ -1,5 +1,4 @@
 ﻿using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
@@ -12,9 +11,9 @@ namespace Thingventory.Core.Models
     public interface IValidatingModel : INotifyPropertyChanged
     {
         bool IsValid { get; }
-        event TypedEventHandler<IValidatingModel, PropertyValidationResult> PropertyErrorsChanged;
-        IReadOnlyCollection<PropertyValidationResult> ValidateAll();
-        PropertyValidationResult ValidateProperty(string propertyName);
+        event TypedEventHandler<IValidatingModel, ValidationResult> PropertyErrorsChanged;
+        ValidationResult ValidateAll();
+        ValidationResult ValidateProperty(string propertyName);
     }
 
     public abstract class ValidatingModel<TSelf> : ChangeTrackingModel, IValidatingModel
@@ -36,18 +35,21 @@ namespace Thingventory.Core.Models
             private set => Set(ref mIsValid, value);
         }
 
-        public event TypedEventHandler<IValidatingModel, PropertyValidationResult> PropertyErrorsChanged;
+        public event TypedEventHandler<IValidatingModel, ValidationResult> PropertyErrorsChanged;
 
-        public IReadOnlyCollection<PropertyValidationResult> ValidateAll()
+        public ValidationResult ValidateAll()
         {
-            return GetType()
+            var allResults = GetType()
                 .GetProperties()
                 .Select(property => property.Name)
                 .Select(ValidateProperty)
+                .SelectMany(result => result.Errors)
                 .ToArray();
+
+            return new ValidationResult(allResults);
         }
 
-        public PropertyValidationResult ValidateProperty(string propertyName)
+        public ValidationResult ValidateProperty(string propertyName)
         {
             bool isDifferent = false;
             var actualResult = mResults.AddOrUpdate(propertyName, _ =>
@@ -66,15 +68,15 @@ namespace Thingventory.Core.Models
 
             if (isDifferent)
             {
-                PropertyErrorsChanged?.Invoke(this, new PropertyValidationResult(propertyName, actualResult));
+                PropertyErrorsChanged?.Invoke(this, actualResult);
             }
 
-            return new PropertyValidationResult(propertyName, actualResult);
+            return actualResult;
         }
 
         private bool _AreEqual(ValidationResult left, ValidationResult right)
         {
-            return left.IsValid != right.IsValid || !left.Errors.SequenceEqual(right.Errors);
+            return left.IsValid == right.IsValid && left.Errors.SequenceEqual(right.Errors);
         }
 
         private TSelf _GetSelf() => (TSelf) this;
@@ -90,17 +92,5 @@ namespace Thingventory.Core.Models
 
             ValidateProperty(propertyName);
         }
-    }
-
-    public sealed class PropertyValidationResult
-    {
-        public PropertyValidationResult(string propertyName, ValidationResult result)
-        {
-            PropertyName = propertyName;
-            Result = result;
-        }
-
-        public string PropertyName { get; }
-        public ValidationResult Result { get; }
     }
 }

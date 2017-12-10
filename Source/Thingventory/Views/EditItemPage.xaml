@@ -6,6 +6,7 @@
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   xmlns:viewModels="using:Thingventory.ViewModels"
+  xmlns:xaml="using:Thingventory.Xaml"
   mc:Ignorable="d">
 
   <Page.Resources>
@@ -21,14 +22,24 @@
   <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
       <StackPanel Orientation="Vertical" Margin="4 0">
-        <TextBox Header="Name" Text="{x:Bind ViewModel.Item.Name, Mode=TwoWay}" />
-        <TextBox Header="Comments" Text="{x:Bind ViewModel.Item.Comments, Mode=TwoWay}" AcceptsReturn="True" />
-        <TextBox Header="Quantity" InputScope="Number"
-                 Text="{x:Bind ViewModel.Item.Quantity, Mode=TwoWay, Converter={StaticResource NumberTextConverter}}" />
-        <TextBox Header="Value" InputScope="Number"
-                 Text="{x:Bind ViewModel.Item.Value, Mode=TwoWay, Converter={StaticResource NumberTextConverter}}" />
-        <TextBox Header="Acquired from" Text="{x:Bind ViewModel.Item.AcquiredFrom, Mode=TwoWay}" />
-        <CalendarDatePicker Header="Acquired date" Date="{x:Bind ViewModel.Item.AcquiredDate, Mode=TwoWay}" />
+        <xaml:ValidationWrapper Header="Name" Target="{x:Bind ViewModel.Item, Mode=OneWay}" PropertyName="Name">
+          <TextBox Text="{x:Bind ViewModel.Item.Name, Mode=TwoWay}" />
+        </xaml:ValidationWrapper>
+        <xaml:ValidationWrapper Header="Comments" Target="{x:Bind ViewModel.Item, Mode=OneWay}" PropertyName="Comments">
+          <TextBox Text="{x:Bind ViewModel.Item.Comments, Mode=TwoWay}" AcceptsReturn="True" />
+        </xaml:ValidationWrapper>
+        <xaml:ValidationWrapper Header="Quantity" Target="{x:Bind ViewModel.Item, Mode=OneWay}" PropertyName="Quantity">
+          <TextBox InputScope="Number" Text="{x:Bind ViewModel.Item.Quantity, Mode=TwoWay, Converter={StaticResource NumberTextConverter}}" />
+        </xaml:ValidationWrapper>
+        <xaml:ValidationWrapper Header="Value" Target="{x:Bind ViewModel.Item, Mode=OneWay}" PropertyName="Value">
+          <TextBox InputScope="Number" Text="{x:Bind ViewModel.Item.Value, Mode=TwoWay, Converter={StaticResource NumberTextConverter}}" />
+        </xaml:ValidationWrapper>
+        <xaml:ValidationWrapper Header="Acquired from" Target="{x:Bind ViewModel.Item, Mode=OneWay}" PropertyName="AcquiredFrom">
+          <TextBox Text="{x:Bind ViewModel.Item.AcquiredFrom, Mode=TwoWay}" />
+        </xaml:ValidationWrapper>
+        <xaml:ValidationWrapper Header="Acquired date" Target="{x:Bind ViewModel.Item, Mode=OneWay}" PropertyName="AcquiredDate">
+          <CalendarDatePicker Date="{x:Bind ViewModel.Item.AcquiredDate, Mode=TwoWay}" />
+        </xaml:ValidationWrapper>
       </StackPanel>
     </ScrollViewer>
   </Grid>

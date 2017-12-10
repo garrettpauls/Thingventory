@@ -52,8 +52,16 @@ namespace Thingventory.ViewModels
 
         private async void _Save()
         {
-            await mItemService.SaveItemAsync(Item);
-            NavigationService.GoBack();
+            var result = Item.ValidateAll();
+            if (result.IsValid)
+            {
+                await mItemService.SaveItemAsync(Item);
+                NavigationService.GoBack();
+            }
+            else
+            {
+                // TODO: show validation error
+            }
         }
 
         public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)

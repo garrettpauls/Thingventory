@@ -4,6 +4,7 @@
   <ResourceDictionary.MergedDictionaries>
     <ResourceDictionary Source="Converters.xaml" />
     <ResourceDictionary Source="Glyphs.xaml" />
+    <ResourceDictionary Source="ValidationWrapper.xaml" />
     <ResourceDictionary>
       <Style x:Name="TextContentCommandBarStyle" TargetType="CommandBar">
         <Setter Property="ContentTemplate">

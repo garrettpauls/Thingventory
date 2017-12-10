@@ -117,6 +117,7 @@
     <Compile Include="Xaml\Converters\FontIconFactory.cs" />
     <Compile Include="Xaml\Converters\NullOrWhiteSpaceConverter.cs" />
     <Compile Include="Xaml\Converters\NumberTextConverter.cs" />
+    <Compile Include="Xaml\ValidationWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -189,6 +190,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Themes\ValidationWrapper.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\Glyphs.xaml">
       <SubType>Designer</SubType>
