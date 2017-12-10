@@ -132,6 +132,7 @@
     <Compile Include="Models\ItemDetails.cs" />
     <Compile Include="Models\ItemSummary.cs" />
     <Compile Include="Models\Location.cs" />
+    <Compile Include="Models\ValidatingModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IFeedbackProvider.cs" />
     <Compile Include="Services\InventoryDataAccessBase.cs" />
@@ -147,6 +148,9 @@
     </PackageReference>
     <PackageReference Include="Common.Logging">
       <Version>3.4.1</Version>
+    </PackageReference>
+    <PackageReference Include="FluentValidation">
+      <Version>7.2.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite">
       <Version>1.1.4</Version>

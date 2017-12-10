@@ -1,8 +1,9 @@
 ﻿using System;
+using FluentValidation;
 
 namespace Thingventory.Core.Models
 {
-    public sealed class ItemDetails : ChangeTrackingModel
+    public sealed class ItemDetails : ValidatingModel<ItemDetails>
     {
         private DateTimeOffset? mAcquiredDate;
         private string mAcquiredFrom = "";
@@ -15,6 +16,7 @@ namespace Thingventory.Core.Models
         private decimal? mValue;
 
         public ItemDetails(int id)
+            : base(new ItemDetailsValidator())
         {
             Id = id;
             mCreatedInstant = mUpdatedInstant = DateTimeOffset.Now;
@@ -74,6 +76,16 @@ namespace Thingventory.Core.Models
         {
             get => mValue;
             set => Set(ref mValue, value);
+        }
+    }
+
+    public sealed class ItemDetailsValidator : AbstractValidator<ItemDetails>
+    {
+        public ItemDetailsValidator()
+        {
+            RuleFor(item => item.AcquiredFrom).NotNull();
+            RuleFor(item => item.Comments).NotNull();
+            RuleFor(item => item.Name).NotNull().NotEmpty();
         }
     }
 }
