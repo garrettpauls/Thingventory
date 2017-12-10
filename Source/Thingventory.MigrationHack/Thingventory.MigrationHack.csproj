@@ -133,7 +133,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Source\Thingventory.Core\Thingventory.Core.csproj">
+    <ProjectReference Include="..\Thingventory.Core\Thingventory.Core.csproj">
       <Project>{e242825f-8529-4bad-b674-be70441c181f}</Project>
       <Name>Thingventory.Core</Name>
     </ProjectReference>

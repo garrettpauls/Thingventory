@@ -18,7 +18,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NavViewEx", "Dependencies\N
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thingventory.Core", "Source\Thingventory.Core\Thingventory.Core.csproj", "{E242825F-8529-4BAD-B674-BE70441C181F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thingventory.MigrationHack", "Thingventory.MigrationHack\Thingventory.MigrationHack.csproj", "{F82CF04D-E045-4448-A916-22918B4586DE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Thingventory.MigrationHack", "Source\Thingventory.MigrationHack\Thingventory.MigrationHack.csproj", "{F82CF04D-E045-4448-A916-22918B4586DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
