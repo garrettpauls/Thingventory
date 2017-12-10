@@ -28,6 +28,11 @@ namespace Thingventory.ViewModels
 
         public ObservableCollection<HomePageLocationViewModel> Locations { get; } = new ObservableCollection<HomePageLocationViewModel>();
 
+        public void EditItem(ItemSummary item)
+        {
+            NavigationService.Navigate(typeof(EditItemPage), new EditItemPagePayload(item.LocationId, item.Id));
+        }
+
         public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
             var locations = await mLocationService.GetLocationsAsync();

@@ -2,6 +2,7 @@
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using NavViewEx;
+using Thingventory.Core.Models;
 using Thingventory.ViewModels;
 
 namespace Thingventory.Views
@@ -35,6 +36,14 @@ namespace Thingventory.Views
                     e.Handled = true;
                     await vm.RenameAsync();
                     break;
+            }
+        }
+
+        private void _HandleItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (e.ClickedItem is ItemSummary item)
+            {
+                ViewModel.EditItem(item);
             }
         }
     }

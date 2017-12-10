@@ -112,7 +112,7 @@ namespace Thingventory.Core.Services
             return details;
         }
 
-        private ItemSummary _TranslateToSummary(ItemEntity item) => new ItemSummary(item.Id, item.Name);
+        private ItemSummary _TranslateToSummary(ItemEntity item) => new ItemSummary(item.Id, item.Name, item.LocationId);
 
         private void _UpdateEntity(ItemEntity entity, ItemDetails item)
         {

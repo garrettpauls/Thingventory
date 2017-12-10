@@ -23,7 +23,8 @@
   <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <SemanticZoom>
       <SemanticZoom.ZoomedInView>
-        <GridView ItemsSource="{Binding Source={StaticResource GroupedItems}}" DisplayMemberPath="Name">
+        <GridView ItemsSource="{Binding Source={StaticResource GroupedItems}}" DisplayMemberPath="Name"
+                  SelectionMode="None" ItemClick="_HandleItemClick" IsItemClickEnabled="True">
           <GridView.Resources>
             <Style TargetType="GridViewHeaderItem">
               <Setter Property="HorizontalContentAlignment" Value="Stretch" />
