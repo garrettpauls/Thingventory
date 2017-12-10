@@ -8,9 +8,10 @@ using Thingventory.Core.Data;
 namespace Thingventory.Core.Migrations
 {
     [DbContext(typeof(ThingDataContext))]
-    partial class ThingDataContextModelSnapshot : ModelSnapshot
+    [Migration("20171210025924_AddBasicItemInformation")]
+    partial class AddBasicItemInformation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.4");

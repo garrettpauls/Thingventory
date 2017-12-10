@@ -5,9 +5,31 @@
   xmlns:local="using:Thingventory.Views"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:viewModels="using:Thingventory.ViewModels"
   mc:Ignorable="d">
 
+  <Page.Resources>
+    <DataTemplate x:Name="HeaderDataTemplate" x:DataType="viewModels:EditItemPageViewModel">
+      <CommandBar Content="{x:Bind HeaderText, Mode=OneWay}" Style="{StaticResource TextContentCommandBarStyle}">
+        <CommandBar.PrimaryCommands>
+          <AppBarButton Icon="Save" Label="Save" Command="{x:Bind SaveCommand}" />
+        </CommandBar.PrimaryCommands>
+      </CommandBar>
+    </DataTemplate>
+  </Page.Resources>
+
   <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <TextBlock Text="TODO: Add or edit item" />
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+      <StackPanel Orientation="Vertical" Margin="4 0">
+        <TextBox Header="Name" Text="{x:Bind ViewModel.Item.Name, Mode=TwoWay}" />
+        <TextBox Header="Comments" Text="{x:Bind ViewModel.Item.Comments, Mode=TwoWay}" AcceptsReturn="True" />
+        <TextBox Header="Quantity" InputScope="Number"
+                 Text="{x:Bind ViewModel.Item.Quantity, Mode=TwoWay, Converter={StaticResource NumberTextConverter}}" />
+        <TextBox Header="Value" InputScope="Number"
+                 Text="{x:Bind ViewModel.Item.Value, Mode=TwoWay, Converter={StaticResource NumberTextConverter}}" />
+        <TextBox Header="Acquired from" Text="{x:Bind ViewModel.Item.AcquiredFrom, Mode=TwoWay}" />
+        <CalendarDatePicker Header="Acquired date" Date="{x:Bind ViewModel.Item.AcquiredDate, Mode=TwoWay}" />
+      </StackPanel>
+    </ScrollViewer>
   </Grid>
 </Page>

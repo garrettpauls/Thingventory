@@ -7,8 +7,17 @@ namespace Thingventory.Core.Data
     [Table("Item")]
     public sealed class ItemEntity
     {
+        [Column("AcquiredDate")]
+        public DateTimeOffset? AcquiredDate { get; set; }
+
+        [Column("AcquiredFrom"), Required]
+        public string AcquiredFrom { get; set; } = "";
+
+        [Column("Comments"), Required]
+        public string Comments { get; set; } = "";
+
         [Column("CreatedInstant"), Required]
-        public DateTimeOffset CreatedInstant { get; set; }
+        public DateTimeOffset CreatedInstant { get; set; } = DateTimeOffset.Now;
 
         [Key, Column("Id"), Required, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
@@ -17,9 +26,15 @@ namespace Thingventory.Core.Data
         public int LocationId { get; set; }
 
         [Column("Name"), Required]
-        public string Name { get; set; }
+        public string Name { get; set; } = "";
+
+        [Column("Quantity"), Required]
+        public uint Quantity { get; set; } = 1;
 
         [Column("UpdatedInstant"), Required]
-        public DateTimeOffset UpdatedInstant { get; set; }
+        public DateTimeOffset UpdatedInstant { get; set; } = DateTimeOffset.Now;
+
+        [Column("Value")]
+        public decimal? Value { get; set; }
     }
 }

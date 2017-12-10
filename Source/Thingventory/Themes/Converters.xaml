@@ -4,6 +4,7 @@
   xmlns:c10="using:Template10.Converters"
   xmlns:c="using:Thingventory.Xaml.Converters">
   <c10:StringFormatConverter x:Name="StringFormatConverter" />
+  <c:NumberTextConverter x:Name="NumberTextConverter" />
   <c:NullOrWhiteSpaceConverter x:Name="HideNullOrWhiteSpaceConverter">
     <c:NullOrWhiteSpaceConverter.IfNullOrEmpty>
       <Visibility>Collapsed</Visibility>
@@ -13,4 +14,3 @@
     </c:NullOrWhiteSpaceConverter.Otherwise>
   </c:NullOrWhiteSpaceConverter>
 </ResourceDictionary>
-

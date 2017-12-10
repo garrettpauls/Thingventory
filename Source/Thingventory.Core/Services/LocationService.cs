@@ -9,6 +9,7 @@ namespace Thingventory.Core.Services
     public interface ILocationService
     {
         Task<Location> CreateLocationAsync(string name, string notes = "");
+        Task<Location> GetLocationAsync(int id);
         Task<Location[]> GetLocationsAsync();
         Task SaveLocationAsync(Location location);
     }
@@ -32,6 +33,15 @@ namespace Thingventory.Core.Services
                 context.Locations.Add(entity);
                 await context.SaveChangesAsync();
 
+                return _Translate(entity);
+            }
+        }
+
+        public async Task<Location> GetLocationAsync(int id)
+        {
+            using (var context = GetContext())
+            {
+                var entity = await context.Locations.FirstAsync(loc => loc.Id == id);
                 return _Translate(entity);
             }
         }

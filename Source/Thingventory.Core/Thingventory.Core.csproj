@@ -122,9 +122,14 @@
     <Compile Include="Migrations\20171210004214_AddNotesToLocation.designer.cs">
       <DependentUpon>20171210004214_AddNotesToLocation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20171210025924_AddBasicItemInformation.cs" />
+    <Compile Include="Migrations\20171210025924_AddBasicItemInformation.designer.cs">
+      <DependentUpon>20171210025924_AddBasicItemInformation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\ThingDataContextModelSnapshot.cs" />
     <Compile Include="Models\ChangeTrackingModel.cs" />
     <Compile Include="Models\Inventory.cs" />
+    <Compile Include="Models\ItemDetails.cs" />
     <Compile Include="Models\ItemSummary.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

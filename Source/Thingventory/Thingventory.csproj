@@ -116,6 +116,7 @@
     <Compile Include="Views\IHasViewModel.cs" />
     <Compile Include="Xaml\Converters\FontIconFactory.cs" />
     <Compile Include="Xaml\Converters\NullOrWhiteSpaceConverter.cs" />
+    <Compile Include="Xaml\Converters\NumberTextConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
