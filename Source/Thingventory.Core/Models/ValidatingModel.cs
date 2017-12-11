@@ -11,6 +11,7 @@ namespace Thingventory.Core.Models
     public interface IValidatingModel : INotifyPropertyChanged
     {
         bool IsValid { get; }
+        ValidationResult GetCurrentValidationFor(string propertyName);
         event TypedEventHandler<IValidatingModel, ValidationResult> PropertyErrorsChanged;
         ValidationResult ValidateAll();
         ValidationResult ValidateProperty(string propertyName);
@@ -27,6 +28,16 @@ namespace Thingventory.Core.Models
             : base(nameof(IsValid))
         {
             mValidator = validator;
+        }
+
+        public ValidationResult GetCurrentValidationFor(string propertyName)
+        {
+            if (mResults.TryGetValue(propertyName, out var result))
+            {
+                return result;
+            }
+
+            return new ValidationResult();
         }
 
         public bool IsValid

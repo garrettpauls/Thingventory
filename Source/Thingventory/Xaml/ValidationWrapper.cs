@@ -57,7 +57,9 @@ namespace Thingventory.Xaml
 
         private void _HandlePropertyErrorsChanged(IValidatingModel sender, ValidationResult args)
         {
-            var errors = args.Errors.Where(err => err.PropertyName == PropertyName);
+            var errors = sender
+                .GetCurrentValidationFor(PropertyName)
+                .Errors.Where(err => err.PropertyName == PropertyName);
             Errors.AddRange(errors, true);
         }
 
