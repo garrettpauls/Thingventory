@@ -5,6 +5,8 @@
   xmlns:c="using:Thingventory.Xaml.Converters">
   <c10:StringFormatConverter x:Name="StringFormatConverter" />
   <c:NumberTextConverter x:Name="NumberTextConverter" />
+  <c:IsNullConverter x:Name="IsNull" />
+  <c:IsNullConverter x:Name="IsNotNull" NullValue="False" />
   <c:NullOrWhiteSpaceConverter x:Name="HideNullOrWhiteSpaceConverter">
     <c:NullOrWhiteSpaceConverter.IfNullOrEmpty>
       <Visibility>Collapsed</Visibility>

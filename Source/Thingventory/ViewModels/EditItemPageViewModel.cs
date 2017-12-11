@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Navigation;
 using Template10.Mvvm;
 using Thingventory.Core.Models;
 using Thingventory.Core.Services;
+using Thingventory.Views.Dialogs;
 
 namespace Thingventory.ViewModels
 {
@@ -37,9 +39,9 @@ namespace Thingventory.ViewModels
             mLocationService = locationService;
 
             CancelCommand = new DelegateCommand(_Cancel);
-            SaveCommand = new DelegateCommand(_Save);
+            SaveCommand = new DelegateCommand(_Save, () => Item?.HasChanges ?? false);
             SaveAndNewCommand = new DelegateCommand(_SaveAndAdd);
-            UndoCommand = new DelegateCommand(_Undo);
+            UndoCommand = new DelegateCommand(_Undo, () => Item?.HasChanges ?? false);
         }
 
         public DelegateCommand CancelCommand { get; }
@@ -53,7 +55,24 @@ namespace Thingventory.ViewModels
         public ItemDetails Item
         {
             get => mItem;
-            private set => Set(ref mItem, value);
+            private set
+            {
+                if (mItem != value)
+                {
+                    if (mItem != null)
+                    {
+                        mItem.PropertyChanged -= _HandleItemPropertyChanged;
+                    }
+
+                    Set(ref mItem, value);
+
+                    if (mItem != null)
+                    {
+                        mItem.PropertyChanged += _HandleItemPropertyChanged;
+                        _HandleItemPropertyChanged(mItem, new PropertyChangedEventArgs(""));
+                    }
+                }
+            }
         }
 
         public DelegateCommand SaveAndNewCommand { get; }
@@ -63,6 +82,12 @@ namespace Thingventory.ViewModels
         private void _Cancel()
         {
             NavigationService.GoBack();
+        }
+
+        private void _HandleItemPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            SaveCommand.RaiseCanExecuteChanged();
+            UndoCommand.RaiseCanExecuteChanged();
         }
 
         private void _NewItem()
@@ -98,7 +123,7 @@ namespace Thingventory.ViewModels
             }
             else
             {
-                // TODO: show validation error
+                await new ValidationErrorDialog("The item cannot be saved due to the following errors:", result).ShowAsync();
             }
         }
 
@@ -111,6 +136,14 @@ namespace Thingventory.ViewModels
             else
             {
                 Item = await mItemService.GetItemDetailsAsync(Item.Id);
+            }
+        }
+
+        public void ClearAcquiredDate()
+        {
+            if (Item != null)
+            {
+                Item.AcquiredDate = null;
             }
         }
 

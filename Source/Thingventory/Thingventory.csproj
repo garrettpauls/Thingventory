@@ -107,6 +107,9 @@
     <Compile Include="Views\Dialogs\RenameLocationDialog.xaml.cs">
       <DependentUpon>RenameLocationDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Dialogs\ValidationErrorDialog.xaml.cs">
+      <DependentUpon>ValidationErrorDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EditItemPage.xaml.cs">
       <DependentUpon>EditItemPage.xaml</DependentUpon>
     </Compile>
@@ -116,7 +119,9 @@
     <Compile Include="Views\IHasViewModel.cs" />
     <Compile Include="Xaml\Converters\FontIconFactory.cs" />
     <Compile Include="Xaml\Converters\NullOrWhiteSpaceConverter.cs" />
+    <Compile Include="Xaml\Converters\IsNullConverter.cs" />
     <Compile Include="Xaml\Converters\NumberTextConverter.cs" />
+    <Compile Include="Xaml\TextBoxEx.cs" />
     <Compile Include="Xaml\ValidationWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -201,6 +206,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="Views\Dialogs\RenameLocationDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\ValidationErrorDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

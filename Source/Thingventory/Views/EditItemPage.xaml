@@ -28,17 +28,18 @@
     <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
       <StackPanel Orientation="Vertical" Margin="4 0">
         <xaml:ValidationWrapper Header="Name" Target="{x:Bind ViewModel.Item, Mode=OneWay}" PropertyName="Name">
-          <TextBox Text="{x:Bind ViewModel.Item.Name, Mode=TwoWay}" />
+          <TextBox Text="{x:Bind ViewModel.Item.Name, Mode=TwoWay}" xaml:TextBoxEx.SelectAllOnFocus="True" />
         </xaml:ValidationWrapper>
         <xaml:ValidationWrapper Header="Comments" Target="{x:Bind ViewModel.Item, Mode=OneWay}" PropertyName="Comments">
-          <TextBox Text="{x:Bind ViewModel.Item.Comments, Mode=TwoWay}" AcceptsReturn="True" />
+          <TextBox Text="{x:Bind ViewModel.Item.Comments, Mode=TwoWay}" AcceptsReturn="True"
+                   xaml:TextBoxEx.SelectAllOnFocus="True" />
         </xaml:ValidationWrapper>
         <xaml:ValidationWrapper Header="Quantity" Target="{x:Bind ViewModel.Item, Mode=OneWay}" PropertyName="Quantity">
-          <TextBox InputScope="Number"
+          <TextBox InputScope="Number" xaml:TextBoxEx.SelectAllOnFocus="True"
                    Text="{x:Bind ViewModel.Item.Quantity, Mode=TwoWay, Converter={StaticResource NumberTextConverter}}" />
         </xaml:ValidationWrapper>
         <xaml:ValidationWrapper Header="Value" Target="{x:Bind ViewModel.Item, Mode=OneWay}" PropertyName="Value">
-          <TextBox InputScope="Number"
+          <TextBox InputScope="Number" xaml:TextBoxEx.SelectAllOnFocus="True"
                    Text="{x:Bind ViewModel.Item.Value, Mode=TwoWay, Converter={StaticResource NumberTextConverter}}" />
         </xaml:ValidationWrapper>
         <xaml:ValidationWrapper Header="Acquired from" Target="{x:Bind ViewModel.Item, Mode=OneWay}"
@@ -47,7 +48,12 @@
         </xaml:ValidationWrapper>
         <xaml:ValidationWrapper Header="Acquired date" Target="{x:Bind ViewModel.Item, Mode=OneWay}"
                                 PropertyName="AcquiredDate">
-          <CalendarDatePicker Date="{x:Bind ViewModel.Item.AcquiredDate, Mode=TwoWay}" />
+          <StackPanel Orientation="Horizontal">
+            <CalendarDatePicker Date="{x:Bind ViewModel.Item.AcquiredDate, Mode=TwoWay}" />
+            <SymbolIcon Symbol="Cancel" Tapped="{x:Bind ViewModel.ClearAcquiredDate}" Margin="4 0"
+                        VerticalAlignment="Center"
+                        Visibility="{x:Bind ViewModel.Item.AcquiredDate, Mode=OneWay, Converter={StaticResource HideNullOrWhiteSpaceConverter}}" />
+          </StackPanel>
         </xaml:ValidationWrapper>
       </StackPanel>
     </ScrollViewer>
