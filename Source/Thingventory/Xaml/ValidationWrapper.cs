@@ -18,6 +18,12 @@ namespace Thingventory.Xaml
             "Errors", typeof(ObservableCollection<ValidationFailure>), typeof(ValidationWrapper),
             new PropertyMetadata(default(ObservableCollection<ValidationFailure>)));
 
+        public static readonly DependencyProperty ErrorVisibilityProperty = DependencyProperty.Register(
+            "ErrorVisibility", typeof(Visibility), typeof(ValidationWrapper), new PropertyMetadata(Windows.UI.Xaml.Visibility.Collapsed));
+
+        public static readonly DependencyProperty FullErrorMessageProperty = DependencyProperty.Register(
+            "FullErrorMessage", typeof(string), typeof(ValidationWrapper), new PropertyMetadata(default(string)));
+
         public static readonly DependencyProperty HeaderProperty = DependencyProperty.Register(
             "Header", typeof(string), typeof(ValidationWrapper), new PropertyMetadata(default(string)));
 
@@ -35,6 +41,18 @@ namespace Thingventory.Xaml
         {
             get => (ObservableCollection<ValidationFailure>) GetValue(ErrorsProperty);
             private set => SetValue(ErrorsProperty, value);
+        }
+
+        public Visibility ErrorVisibility
+        {
+            get => (Visibility) GetValue(ErrorVisibilityProperty);
+            private set => SetValue(ErrorVisibilityProperty, value);
+        }
+
+        public string FullErrorMessage
+        {
+            get => (string) GetValue(FullErrorMessageProperty);
+            private set => SetValue(FullErrorMessageProperty, value);
         }
 
         public string Header
@@ -59,8 +77,11 @@ namespace Thingventory.Xaml
         {
             var errors = sender
                 .GetCurrentValidationFor(PropertyName)
-                .Errors.Where(err => err.PropertyName == PropertyName);
+                .Errors.Where(err => err.PropertyName == PropertyName)
+                .ToArray();
             Errors.AddRange(errors, true);
+            FullErrorMessage = string.Join(" ", errors.Select(err => err.ErrorMessage));
+            ErrorVisibility = errors.Any() ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private static void _HandleTargetChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

@@ -1,11 +1,14 @@
-﻿namespace Thingventory.Core.Models
+﻿using FluentValidation;
+
+namespace Thingventory.Core.Models
 {
-    public sealed class Location : ChangeTrackingModel
+    public sealed class Location : ValidatingModel<Location>
     {
-        private string mName;
-        private string mNotes;
+        private string mName = "";
+        private string mNotes = "";
 
         public Location(int id)
+            : base(new LocationValidator())
         {
             Id = id;
         }
@@ -22,6 +25,15 @@
         {
             get => mNotes;
             set => Set(ref mNotes, value);
+        }
+    }
+
+    public sealed class LocationValidator : AbstractValidator<Location>
+    {
+        public LocationValidator()
+        {
+            RuleFor(x => x.Name).NotNull().NotEmpty();
+            RuleFor(x => x.Notes).NotNull();
         }
     }
 }

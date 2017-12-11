@@ -15,7 +15,7 @@
     <DataTemplate x:Name="HeaderDataTemplate" x:DataType="viewModels:HomePageViewModel">
       <CommandBar Content="Locations" Style="{StaticResource TextContentCommandBarStyle}">
         <CommandBar.PrimaryCommands>
-          <AppBarButton Label="Add" Icon="Add" />
+          <AppBarButton Label="Add location" Icon="Add" Command="{x:Bind AddLocationCommand}" />
         </CommandBar.PrimaryCommands>
       </CommandBar>
     </DataTemplate>
@@ -48,6 +48,7 @@
                                TextTrimming="CharacterEllipsis"
                                ToolTipService.ToolTip="{x:Bind Location.Notes, Mode=OneWay}" />
                     <StackPanel Grid.Column="2" Orientation="Horizontal">
+                      <SymbolIcon Symbol="Delete" Tapped="_HandleCommandTapped" Tag="DeleteLocation" Margin="8 0" />
                       <SymbolIcon Symbol="Rename" Tapped="_HandleCommandTapped" Tag="RenameLocation" Margin="8 0" />
                       <FontIcon Glyph="{StaticResource AddToGlyph}" Tapped="_HandleCommandTapped" Tag="AddItem"
                                 Margin="8 0" />

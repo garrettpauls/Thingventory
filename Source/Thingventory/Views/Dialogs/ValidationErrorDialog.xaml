@@ -8,7 +8,8 @@
   xmlns:results="using:FluentValidation.Results"
   mc:Ignorable="d"
   Title="Validation errors"
-  PrimaryButtonText="OK">
+  PrimaryButtonText="OK"
+  DefaultButton="Primary">
 
   <Grid>
     <Grid.RowDefinitions>

@@ -12,6 +12,7 @@
           <Grid>
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="Auto" />
               <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -19,19 +20,13 @@
               <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock Grid.Column="0" Grid.Row="0" Text="{TemplateBinding Header}" Margin="4" />
-            <ItemsControl Grid.Column="1" Grid.Row="0" ItemsSource="{TemplateBinding Errors}" IsTabStop="False">
-              <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                  <StackPanel Orientation="Horizontal" />
-                </ItemsPanelTemplate>
-              </ItemsControl.ItemsPanel>
-              <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                  <TextBlock Text="{Binding ErrorMessage}" Margin="4" ToolTipService.ToolTip="{Binding ErrorMessage}" />
-                </DataTemplate>
-              </ItemsControl.ItemTemplate>
-            </ItemsControl>
-            <ContentControl Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Content="{TemplateBinding Content}"
+            <FontIcon Grid.Column="1" Grid.Row="0" Glyph="{StaticResource WarningGlyph}" Foreground="Goldenrod"
+                      ToolTipService.ToolTip="{TemplateBinding FullErrorMessage}" ToolTipService.Placement="Right"
+                      Visibility="{TemplateBinding ErrorVisibility}" VerticalAlignment="Center" />
+            <TextBlock Grid.Column="2" Grid.Row="0" Text="{TemplateBinding FullErrorMessage}"
+                       TextTrimming="CharacterEllipsis" Visibility="{TemplateBinding ErrorVisibility}"
+                       Margin="4" />
+            <ContentControl Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1" Content="{TemplateBinding Content}"
                             ContentTemplate="{TemplateBinding ContentTemplate}" IsTabStop="False"
                             HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" />
           </Grid>

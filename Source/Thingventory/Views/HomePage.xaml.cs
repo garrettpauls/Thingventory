@@ -32,6 +32,10 @@ namespace Thingventory.Views
                     e.Handled = true;
                     await vm.AddItemAsync();
                     break;
+                case "DeleteLocation":
+                    e.Handled = true;
+                    await ViewModel.DeleteLocationAsync(vm);
+                    break;
                 case "RenameLocation":
                     e.Handled = true;
                     await vm.RenameAsync();

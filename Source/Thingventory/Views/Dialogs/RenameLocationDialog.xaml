@@ -5,21 +5,20 @@
   xmlns:local="using:Thingventory.Views.Dialogs"
   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:xaml="using:Thingventory.Xaml"
   mc:Ignorable="d"
   Title="Rename location"
   PrimaryButtonText="Rename"
-  SecondaryButtonText="Cancel">
+  SecondaryButtonText="Cancel"
+  SecondaryButtonClick="_HandleSecondaryButtonClick"
+  DefaultButton="Primary">
 
   <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
-    <StackPanel Orientation="Horizontal">
-      <TextBlock Text="Name" />
-      <StackPanel Margin="12 0" Orientation="Horizontal" x:Name="NameIsEmptyWarning">
-        <FontIcon Glyph="{StaticResource WarningGlyph}" Foreground="Goldenrod" />
-        <TextBlock Text="Name cannot be empty." />
-      </StackPanel>
-    </StackPanel>
-    <TextBox x:Name="NameBox" HorizontalAlignment="Stretch" TextChanged="_HandleNameChanged" />
-    <TextBox x:Name="NotesBox" Header="Notes" HorizontalAlignment="Stretch" />
+    <xaml:ValidationWrapper Header="Name" Target="{x:Bind Location}" PropertyName="Name">
+      <TextBox Text="{x:Bind Location.Name, Mode=TwoWay}" HorizontalAlignment="Stretch" xaml:TextBoxEx.SelectAllOnFocus="True" />
+    </xaml:ValidationWrapper>
+    <xaml:ValidationWrapper Header="Notes" Target="{x:Bind Location}" PropertyName="Notes">
+      <TextBox Text="{x:Bind Location.Notes, Mode=TwoWay}" HorizontalAlignment="Stretch" xaml:TextBoxEx.SelectAllOnFocus="True" />
+    </xaml:ValidationWrapper>
   </StackPanel>
 </ContentDialog>
-

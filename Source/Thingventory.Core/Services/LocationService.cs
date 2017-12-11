@@ -9,6 +9,7 @@ namespace Thingventory.Core.Services
     public interface ILocationService
     {
         Task<Location> CreateLocationAsync(string name, string notes = "");
+        Task DeleteLocationAsync(int id);
         Task<Location> GetLocationAsync(int id);
         Task<Location[]> GetLocationsAsync();
         Task SaveLocationAsync(Location location);
@@ -34,6 +35,20 @@ namespace Thingventory.Core.Services
                 await context.SaveChangesAsync();
 
                 return _Translate(entity);
+            }
+        }
+
+        public async Task DeleteLocationAsync(int id)
+        {
+            using (var context = GetContext())
+            {
+                var items = context.Items.Where(item => item.LocationId == id);
+                context.Items.RemoveRange(items);
+
+                var locations = context.Locations.Where(loc => loc.Id == id);
+                context.Locations.RemoveRange(locations);
+
+                await context.SaveChangesAsync();
             }
         }
 

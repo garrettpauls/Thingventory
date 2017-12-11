@@ -24,9 +24,49 @@ namespace Thingventory.ViewModels
         {
             mLocationService = locationService;
             mItemService = itemService;
+
+            AddLocationCommand = new DelegateCommand(_AddLocation);
         }
 
+        public DelegateCommand AddLocationCommand { get; }
+
         public ObservableCollection<HomePageLocationViewModel> Locations { get; } = new ObservableCollection<HomePageLocationViewModel>();
+
+        private async void _AddLocation()
+        {
+            var dialog = new RenameLocationDialog()
+            {
+                Title = "Create location",
+                PrimaryButtonText = "Add location"
+            };
+
+            var result = await dialog.ShowAsync();
+            if (result == ContentDialogResult.Primary)
+            {
+                var loc = await mLocationService.CreateLocationAsync(dialog.Location.Name, dialog.Location.Notes);
+                Locations.Add(new HomePageLocationViewModel(loc, mLocationService, mItemService, NavigationService));
+            }
+        }
+
+        public async Task DeleteLocationAsync(HomePageLocationViewModel vm)
+        {
+            var dialog = new ContentDialog
+            {
+                Title = $"Delete {vm.Location.Name}",
+                Content = $"Are you sure you want to delete location {vm.Location.Name} and all items it contains? This action can not be undone.",
+                PrimaryButtonText = "Delete",
+                SecondaryButtonText = "Keep",
+                DefaultButton = ContentDialogButton.Secondary
+            };
+
+            var result = await dialog.ShowAsync();
+
+            if (result == ContentDialogResult.Primary)
+            {
+                Locations.Remove(vm);
+                await mLocationService.DeleteLocationAsync(vm.Location.Id).ConfigureAwait(false);
+            }
+        }
 
         public void EditItem(ItemSummary item)
         {
@@ -77,26 +117,12 @@ namespace Thingventory.ViewModels
 
         public async Task RenameAsync()
         {
-            var dialog = new RenameLocationDialog
-            {
-                LocationName = Location.Name,
-                LocationNotes = Location.Notes
-            };
+            var dialog = new RenameLocationDialog(Location);
 
             var result = await dialog.ShowAsync();
             if (result == ContentDialogResult.Primary)
             {
-                if (string.IsNullOrWhiteSpace(dialog.LocationName))
-                {
-                    // TODO: show validation error
-                }
-                else
-                {
-                    Location.Name = dialog.LocationName;
-                    Location.Notes = dialog.LocationNotes;
-
-                    await mLocationService.SaveLocationAsync(Location);
-                }
+                await mLocationService.SaveLocationAsync(Location);
             }
         }
     }
