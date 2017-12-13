@@ -48,13 +48,13 @@
                                TextTrimming="CharacterEllipsis"
                                ToolTipService.ToolTip="{x:Bind Location.Notes, Mode=OneWay}" />
                     <StackPanel Grid.Column="2" Orientation="Horizontal">
-                      <HyperlinkButton Tapped="_HandleCommandTapped" Tag="DeleteLocation" Margin="8 0">
+                      <HyperlinkButton Click="_HandleCommandClicked" Tapped="_HandleCommandTapped" Tag="DeleteLocation" Margin="8 0">
                         <SymbolIcon Symbol="Delete" />
                       </HyperlinkButton>
-                      <HyperlinkButton Tapped="_HandleCommandTapped" Tag="RenameLocation" Margin="8 0">
+                      <HyperlinkButton Click="_HandleCommandClicked" Tapped="_HandleCommandTapped" Tag="RenameLocation" Margin="8 0">
                         <SymbolIcon Symbol="Rename" />
                       </HyperlinkButton>
-                      <HyperlinkButton Tapped="_HandleCommandTapped" Tag="AddItem" Margin="8 0">
+                      <HyperlinkButton Click="_HandleCommandClicked" Tapped="_HandleCommandTapped" Tag="AddItem" Margin="8 0">
                         <FontIcon Glyph="{StaticResource AddToGlyph}" />
                       </HyperlinkButton>
                     </StackPanel>

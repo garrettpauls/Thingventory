@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml;
+﻿using System.Threading.Tasks;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using NavViewEx;
@@ -18,6 +19,17 @@ namespace Thingventory.Views
         public object Header => DataContext;
         public DataTemplate HeaderTemplate => HeaderDataTemplate;
 
+        private async void _HandleCommandClicked(object sender, RoutedEventArgs e)
+        {
+            if (!(sender is FrameworkElement elem) ||
+                !(elem.DataContext is HomePageLocationViewModel vm))
+            {
+                return;
+            }
+
+            await _HandleItemCommand(elem.Tag?.ToString(), vm);
+        }
+
         private async void _HandleCommandTapped(object sender, TappedRoutedEventArgs e)
         {
             if (!(sender is FrameworkElement elem) ||
@@ -26,21 +38,7 @@ namespace Thingventory.Views
                 return;
             }
 
-            switch (elem.Tag?.ToString())
-            {
-                case "AddItem":
-                    e.Handled = true;
-                    await vm.AddItemAsync();
-                    break;
-                case "DeleteLocation":
-                    e.Handled = true;
-                    await ViewModel.DeleteLocationAsync(vm);
-                    break;
-                case "RenameLocation":
-                    e.Handled = true;
-                    await vm.RenameAsync();
-                    break;
-            }
+            e.Handled = await _HandleItemCommand(elem.Tag?.ToString(), vm);
         }
 
         private void _HandleItemClick(object sender, ItemClickEventArgs e)
@@ -49,6 +47,29 @@ namespace Thingventory.Views
             {
                 ViewModel.EditItem(item);
             }
+        }
+
+        private async Task<bool> _HandleItemCommand(string action, HomePageLocationViewModel vm)
+        {
+            var handled = false;
+
+            switch (action)
+            {
+                case "AddItem":
+                    handled = true;
+                    await vm.AddItemAsync();
+                    break;
+                case "DeleteLocation":
+                    handled = true;
+                    await ViewModel.DeleteLocationAsync(vm);
+                    break;
+                case "RenameLocation":
+                    handled = true;
+                    await vm.RenameAsync();
+                    break;
+            }
+
+            return handled;
         }
     }
 }
