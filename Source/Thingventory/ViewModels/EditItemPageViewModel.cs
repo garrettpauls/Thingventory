@@ -92,8 +92,6 @@ namespace Thingventory.ViewModels
 
         private void _NewItem()
         {
-            HeaderText = $"Add item to {mLocation.Name}";
-
             var item = new ItemDetails(NEW_ITEM_ID)
             {
                 LocationId = mPayload.LocationId
@@ -150,10 +148,10 @@ namespace Thingventory.ViewModels
         public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> state)
         {
             mLocation = await mLocationService.GetLocationAsync(mPayload.LocationId);
+            HeaderText = mLocation.Name;
 
             if (mPayload.ItemId.HasValue)
             {
-                HeaderText = $"Edit item in {mLocation.Name}";
                 Item = await mItemService.GetItemDetailsAsync(mPayload.ItemId.Value);
             }
             else

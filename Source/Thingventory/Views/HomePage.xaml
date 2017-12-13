@@ -15,7 +15,12 @@
     <DataTemplate x:Name="HeaderDataTemplate" x:DataType="viewModels:HomePageViewModel">
       <CommandBar Content="Locations" Style="{StaticResource TextContentCommandBarStyle}">
         <CommandBar.PrimaryCommands>
-          <AppBarButton Label="Add location" Icon="Add" Command="{x:Bind AddLocationCommand}" />
+          <AppBarButton Label="Add location" Icon="Add" Command="{x:Bind AddLocationCommand}"
+                        AccessKey="N" ToolTipService.ToolTip="Add location (Ctrl + N)">
+            <AppBarButton.KeyboardAccelerators>
+              <KeyboardAccelerator Modifiers="Control" Key="N" />
+            </AppBarButton.KeyboardAccelerators>
+          </AppBarButton>
         </CommandBar.PrimaryCommands>
       </CommandBar>
     </DataTemplate>
@@ -48,13 +53,16 @@
                                TextTrimming="CharacterEllipsis"
                                ToolTipService.ToolTip="{x:Bind Location.Notes, Mode=OneWay}" />
                     <StackPanel Grid.Column="2" Orientation="Horizontal">
-                      <HyperlinkButton Click="_HandleCommandClicked" Tapped="_HandleCommandTapped" Tag="DeleteLocation" Margin="8 0">
+                      <HyperlinkButton Click="_HandleCommandClicked" Tapped="_HandleCommandTapped" Tag="DeleteLocation"
+                                       Margin="8 0">
                         <SymbolIcon Symbol="Delete" />
                       </HyperlinkButton>
-                      <HyperlinkButton Click="_HandleCommandClicked" Tapped="_HandleCommandTapped" Tag="RenameLocation" Margin="8 0">
+                      <HyperlinkButton Click="_HandleCommandClicked" Tapped="_HandleCommandTapped" Tag="RenameLocation"
+                                       Margin="8 0">
                         <SymbolIcon Symbol="Rename" />
                       </HyperlinkButton>
-                      <HyperlinkButton Click="_HandleCommandClicked" Tapped="_HandleCommandTapped" Tag="AddItem" Margin="8 0">
+                      <HyperlinkButton Click="_HandleCommandClicked" Tapped="_HandleCommandTapped" Tag="AddItem"
+                                       Margin="8 0">
                         <FontIcon Glyph="{StaticResource AddToGlyph}" />
                       </HyperlinkButton>
                     </StackPanel>

@@ -12,13 +12,33 @@
   <Page.Resources>
     <DataTemplate x:Name="HeaderDataTemplate" x:DataType="viewModels:EditItemPageViewModel">
       <CommandBar Content="{x:Bind HeaderText, Mode=OneWay}" Style="{StaticResource TextContentCommandBarStyle}"
-                  OverflowButtonVisibility="Visible">
+                  IsDynamicOverflowEnabled="False" OverflowButtonVisibility="Visible">
         <CommandBar.PrimaryCommands>
-          <AppBarButton Icon="Save" Label="Save" Command="{x:Bind SaveCommand}" />
-          <AppBarButton Icon="Add" Label="Save + new" Command="{x:Bind SaveAndNewCommand}" />
+          <AppBarButton Icon="Save" Label="Save" Command="{x:Bind SaveCommand}"
+                        AccessKey="S" ToolTipService.ToolTip="Save (Ctrl + S)">
+            <AppBarButton.KeyboardAccelerators>
+              <KeyboardAccelerator Modifiers="Control" Key="S" />
+            </AppBarButton.KeyboardAccelerators>
+          </AppBarButton>
+          <AppBarButton Icon="Add" Label="Save + new" Command="{x:Bind SaveAndNewCommand}"
+                        AccessKey="N" ToolTipService.ToolTip="Save + new (Ctrl + N)">
+            <AppBarButton.KeyboardAccelerators>
+              <KeyboardAccelerator Modifiers="Control" Key="N" />
+            </AppBarButton.KeyboardAccelerators>
+          </AppBarButton>
           <AppBarSeparator />
-          <AppBarButton Icon="Undo" Label="Undo" Command="{x:Bind UndoCommand}" />
-          <AppBarButton Icon="Cancel" Label="Cancel" Command="{x:Bind CancelCommand}" />
+          <AppBarButton Icon="Undo" Label="Undo" Command="{x:Bind UndoCommand}"
+                        AccessKey="U" ToolTipService.ToolTip="Undo (Ctrl + Z)">
+            <AppBarButton.KeyboardAccelerators>
+              <KeyboardAccelerator Modifiers="Control,Shift" Key="Z" />
+            </AppBarButton.KeyboardAccelerators>
+          </AppBarButton>
+          <AppBarButton Icon="Cancel" Label="Cancel" Command="{x:Bind CancelCommand}"
+                        AccessKey="C" ToolTipService.ToolTip="Cancel (Escape)">
+            <AppBarButton.KeyboardAccelerators>
+              <KeyboardAccelerator Key="Escape" />
+            </AppBarButton.KeyboardAccelerators>
+          </AppBarButton>
         </CommandBar.PrimaryCommands>
       </CommandBar>
     </DataTemplate>
