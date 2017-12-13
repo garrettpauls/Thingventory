@@ -106,6 +106,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Data\ImageEntity.cs" />
     <Compile Include="Data\ItemEntity.cs" />
     <Compile Include="Data\LocationEntity.cs" />
     <Compile Include="Data\ThingDataContext.cs" />
@@ -128,6 +129,8 @@
     </Compile>
     <Compile Include="Migrations\ThingDataContextModelSnapshot.cs" />
     <Compile Include="Models\ChangeTrackingModel.cs" />
+    <Compile Include="Models\Collections\IncrementalLoadingCollection.cs" />
+    <Compile Include="Models\ImageData.cs" />
     <Compile Include="Models\Inventory.cs" />
     <Compile Include="Models\ItemDetails.cs" />
     <Compile Include="Models\ItemSummary.cs" />
@@ -135,6 +138,7 @@
     <Compile Include="Models\ValidatingModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IFeedbackProvider.cs" />
+    <Compile Include="Services\ImageService.cs" />
     <Compile Include="Services\InventoryDataAccessBase.cs" />
     <Compile Include="Services\InventoryService.cs" />
     <Compile Include="Services\ItemService.cs" />
