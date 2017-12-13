@@ -127,6 +127,10 @@
     <Compile Include="Migrations\20171210025924_AddBasicItemInformation.designer.cs">
       <DependentUpon>20171210025924_AddBasicItemInformation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20171213034823_CreateImageTable.cs" />
+    <Compile Include="Migrations\20171213034823_CreateImageTable.designer.cs">
+      <DependentUpon>20171213034823_CreateImageTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\ThingDataContextModelSnapshot.cs" />
     <Compile Include="Models\ChangeTrackingModel.cs" />
     <Compile Include="Models\Collections\IncrementalLoadingCollection.cs" />
