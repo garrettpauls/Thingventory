@@ -9,7 +9,8 @@
   mc:Ignorable="d"
   d:DesignHeight="300" d:DesignWidth="400">
 
-  <nv:NavigationViewEx x:Name="NavView" HeaderHeight="NaN"
+  <nv:NavigationViewEx x:Name="NavView" HeaderHeight="NaN" ExpandedModeThresholdWidth="99999"
+                       AlwaysShowHeader="True"
                        Header="{Binding RelativeSource={RelativeSource Self}, Path=SelectedItem.Content}">
     <nv:NavigationViewEx.MenuItems>
       <NavigationViewItem Content="Locations" Icon="Home" nv:NavigationViewEx.PageType="views:HomePage" />

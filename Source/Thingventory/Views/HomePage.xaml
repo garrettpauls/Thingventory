@@ -7,7 +7,7 @@
   xmlns:viewModels="using:Thingventory.ViewModels"
   xmlns:models="using:Thingventory.Core.Models"
   xmlns:xaml="using:Thingventory.Xaml"
-  mc:Ignorable="d">
+  mc:Ignorable="d" x:Name="Root">
   <Page.Resources>
     <CollectionViewSource x:Name="GroupedItems" Source="{x:Bind ViewModel.Locations}"
                           IsSourceGrouped="True" ItemsPath="Items" />
@@ -48,10 +48,15 @@
                                TextTrimming="CharacterEllipsis"
                                ToolTipService.ToolTip="{x:Bind Location.Notes, Mode=OneWay}" />
                     <StackPanel Grid.Column="2" Orientation="Horizontal">
-                      <SymbolIcon Symbol="Delete" Tapped="_HandleCommandTapped" Tag="DeleteLocation" Margin="8 0" />
-                      <SymbolIcon Symbol="Rename" Tapped="_HandleCommandTapped" Tag="RenameLocation" Margin="8 0" />
-                      <FontIcon Glyph="{StaticResource AddToGlyph}" Tapped="_HandleCommandTapped" Tag="AddItem"
-                                Margin="8 0" />
+                      <HyperlinkButton Tapped="_HandleCommandTapped" Tag="DeleteLocation" Margin="8 0">
+                        <SymbolIcon Symbol="Delete" />
+                      </HyperlinkButton>
+                      <HyperlinkButton Tapped="_HandleCommandTapped" Tag="RenameLocation" Margin="8 0">
+                        <SymbolIcon Symbol="Rename" />
+                      </HyperlinkButton>
+                      <HyperlinkButton Tapped="_HandleCommandTapped" Tag="AddItem" Margin="8 0">
+                        <FontIcon Glyph="{StaticResource AddToGlyph}" />
+                      </HyperlinkButton>
                     </StackPanel>
                   </Grid>
                 </DataTemplate>
